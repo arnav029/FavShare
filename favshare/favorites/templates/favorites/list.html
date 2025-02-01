@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% block extra_css %}
+<style>
+    body {
+        background-color: #121212;
+        color: #e0e0e0;
+        font-family: 'Arial', sans-serif;
+    }
+    .container {
+        background-color: #1e1e1e;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    }
+    h1 {
+        color: #4CAF50;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    }
+    .btn-add {
+        background-color: #4CAF50;
+        border: none;
+        padding: 10px 20px;
+        color: white;
+        border-radius: 5px;
+        text-decoration: none;
+        transition: background-color 0.3s;
+    }
+    .btn-add:hover {
+        background-color: #45a049;
+    }
+    .favorites-list {
+        list-style-type: none;
+        padding: 0;
+    }
+    .favorite-item {
+        background-color: #2a2a2a;
+        margin: 10px 0;
+        padding: 15px;
+        border-radius: 8px;
+        transition: transform 0.3s, background-color 0.3s;
+    }
+    .favorite-item:hover {
+        transform: translateY(-5px);
+        background-color: #333333;
+    }
+    .favorite-type {
+        font-size: 0.9em;
+        color: #4CAF50;
+    }
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+    
+    .btn-signout {
+        background-color: #d32f2f;
+        border: none;
+        padding: 10px 20px;
+        color: white;
+        border-radius: 5px;
+        text-decoration: none;
+        transition: background-color 0.3s;
+    }
+    
+    .btn-signout:hover {
+        background-color: #b71c1c;
+    }   
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="header">
+        <h1>My Favorites</h1>
+        <a href="{% url 'logout' %}" class="btn-signout">Sign Out</a>
+    </div>
+    
+    <a href="{% url 'add_favorite' %}" class="btn-add mb-4 d-inline-block">Add New Favorite</a>
+
+    {% if items %}
+        <ul class="favorites-list">
+        {% for item in items %}
+            <li class="favorite-item">
+                <strong>{{ item.title }}</strong>
+                <span class="favorite-type">({{ item.get_type_display }})</span>
+            </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p class="text-center mt-4">No favorites added yet. Start by adding your first favorite!</p>
+    {% endif %}
+</div>
+{% endblock %}

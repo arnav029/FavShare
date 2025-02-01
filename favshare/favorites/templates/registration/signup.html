@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+
+{% block extra_css %}
+<style>
+    body {
+        background-color: #121212;
+        color: #e0e0e0;
+    }
+    .card {
+        background-color: #1e1e1e;
+        border: 1px solid #333;
+    }
+    .card-header {
+        background-color: #2c3e50;
+        border-bottom: 1px solid #34495e;
+    }
+    .form-control {
+        background-color: #2a2a2a;
+        border: 1px solid #444;
+        color: #e0e0e0;
+    }
+    .form-control:focus {
+        background-color: #333;
+        border-color: #4a90e2;
+        box-shadow: 0 0 0 0.2rem rgba(74, 144, 226, 0.25);
+    }
+    .btn-primary {
+        background-color: #4a90e2;
+        border-color: #4a90e2;
+    }
+    .btn-primary:hover {
+        background-color: #3a7bc8;
+        border-color: #3a7bc8;
+    }
+    .text-muted {
+        color: #888 !important;
+    }
+    a {
+        color: #4a90e2;
+    }
+    a:hover {
+        color: #3a7bc8;
+    }
+    .custom-checkbox .custom-control-label::before {
+        background-color: #2a2a2a;
+        border: 1px solid #444;
+    }
+    .custom-checkbox .custom-control-input:checked ~ .custom-control-label::before {
+        background-color: #4a90e2;
+        border-color: #4a90e2;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-lg">
+                <div class="card-header">
+                    <h2 class="mb-0 text-center">Sign Up</h2>
+                </div>
+                <div class="card-body">
+                    <form method="post" novalidate>
+                        {% csrf_token %}
+                        {% for field in form %}
+                            <div class="form-group">
+                                {{ field.label_tag }}
+                                {% if field.field.widget.input_type == "checkbox" %}
+                                    <div class="custom-control custom-checkbox">
+                                        {{ field }}
+                                        <label class="custom-control-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                                    </div>
+                                {% else %}
+                                    {{ field }}
+                                {% endif %}
+                                {% if field.errors %}
+                                    <small class="text-danger">
+                                        {% for error in field.errors %}
+                                            {{ error }}
+                                        {% endfor %}
+                                    </small>
+                                {% endif %}
+                                {% if field.help_text %}
+                                    <small class="form-text text-muted">{{ field.help_text|safe }}</small>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                        <button type="submit" class="btn btn-primary btn-block mt-4">Sign Up</button>
+                    </form>
+                </div>
+                <div class="card-footer text-center">
+                    Already have an account? <a href="{% url 'login' %}">Log In</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+
+{% block extra_css %}
+<style>
+    body {
+        background-color: #121212;
+        color: #e0e0e0;
+        font-family: 'Arial', sans-serif;
+    }
+    .container {
+        background-color: #1e1e1e;
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        max-width: 500px;
+        margin: 50px auto;
+    }
+    h1 {
+        color: #4CAF50;
+        text-align: center;
+        margin-bottom: 30px;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    }
+    form {
+        display: flex;
+        flex-direction: column;
+    }
+    .form-group {
+        margin-bottom: 20px;
+    }
+    label {
+        display: block;
+        margin-bottom: 5px;
+        color: #4CAF50;
+    }
+    input[type="text"], select {
+        width: 100%;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #333;
+        background-color: #2a2a2a;
+        color: #e0e0e0;
+    }
+    input[type="text"]:focus, select:focus {
+        outline: none;
+        border-color: #4CAF50;
+        box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+    }
+    button[type="submit"] {
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        padding: 12px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        align-self: flex-start;
+    }
+    button[type="submit"]:hover {
+        background-color: #45a049;
+    }
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+    }
+
+    .btn-signout {
+        background-color: #d32f2f;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        text-decoration: none;
+        transition: background-color 0.3s;
+    }
+
+    .btn-signout:hover {
+        background-color: #b71c1c;
+    }
+
+    .btn-back {
+        background-color: #2196F3;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        text-decoration: none;
+        transition: background-color 0.3s;
+    }
+
+    .btn-back:hover {
+        background-color: #1976D2;
+    }
+
+    .buttons {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+    }
+</style>
+{% endblock %}
+
+
+{% block content %}
+<div class="container">
+    <div class="header">
+        <h1>Add Favorite</h1>
+        <a href="{% url 'logout' %}" class="btn-signout">Sign Out</a>
+    </div>
+    <form method="post">
+        {% csrf_token %}
+        {% for field in form %}
+            <div class="form-group">
+                {{ field.label_tag }}
+                {{ field }}
+                {% if field.errors %}
+                    <small style="color: #ff6b6b;">{{ field.errors|join:", " }}</small>
+                {% endif %}
+            </div>
+        {% endfor %}
+        <div class="buttons">
+            <a href="{% url 'favorites_list' %}" class="btn-back">Back to List</a>
+            <button type="submit">Save</button>
+        </div>
+    </form>
+</div>
+{% endblock %}
