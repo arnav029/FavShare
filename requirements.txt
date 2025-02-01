@@ -1,0 +1,8 @@
+asgiref==3.8.1
+Django==5.1.5
+pillow==11.1.0
+PyQt5==5.15.10
+PyQt5-Qt5==5.15.2
+PyQt5-sip==12.13.0
+sqlparse==0.5.3
+tzdata==2025.1
